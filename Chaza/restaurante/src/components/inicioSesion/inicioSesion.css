@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; /* Cambia 'Roboto' por la fuente que elijas */
+
+}
+
+:root{
+    --fondo-carta: #10141D;
+    --fondo: #171E30;
+    --color-letra: #F2F2F2;
+    --background: #44F2E1;
+    --color-borde: #32A690;
+    --color: #41F2C0;
+}
+
+.contenedor{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--fondo);
+}
+
+.card{
+    padding: 2rem;
+    height: auto;
+    width: auto;
+    min-width: 70vh;
+    border-radius: 4vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--fondo-carta);
+    border: 2px solid var(--color-borde);
+}
+
+#card-titulo{
+    font-size: 3em;
+    margin: 2rem 0;
+    color: var(--color);
+}
+
+.card .box-input {
+    margin: .3rem;
+    width: 50vh;
+    height: 8vh;
+    position: relative;
+    padding: 1vh;
+}
+
+.card .box-input:last-of-type{
+    margin: 10rem 0;
+}
+
+.password-text{
+    text-align: right;
+    width: 70%;
+    color: var(--color-letra);
+}
+
+.password-text a{
+    text-decoration: none;
+    color: var(--color-letra);
+}
+
+.password-text a:hover{
+    text-decoration: underline;
+}
+
+.box-btn{
+    height: 6vh;
+    width: 20vh;
+    margin: 2rem 0;
+
+}
+
+.box-btn button{
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    color: var(--color);
+    border: 2px solid var(--color-borde);
+}
+
+.box-btn button:hover{
+    cursor: pointer;
+    box-shadow: 0px 2px 10px 2px var(--background);
+
+}
+
+
+.box-input input {
+    height: 100%;
+    width: 100%;
+    border: 2px solid var(--color-borde);
+    color: var(--color-letra);
+    background: none;
+    outline: none;
+    border-radius: 15px;
+    padding: 1rem 3rem 1rem 1rem;
+    font-size: 16px;
+}
+
+label {
+    color: var(--color);
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+input:not(:placeholder-shown) + label,
+input:focus + label,
+input:valid + label {
+    top: 15%;
+    background: var(--fondo-carta);
+    padding: 0.2rem;
+    font-size: 16px; 
+}
+
+
+.icono {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1rem;
+    position: absolute;
+    color: var(--color);
+    height: 2vh;
+    width: 2vh;
+    background: none;
+    border: none;
+    font-size: 18px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-text{
+    margin: 0 0 2rem 0;
+    color: var(--color-letra);
+}
+
+.register-text a{
+    text-decoration: none;
+    color: var(--color-letra);
+}
+
+.register-text a:hover{
+    text-decoration: underline;
+}
+
+.alert-text{
+    width: 60vh;
+    font-size: 18px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.alert-text p{
+    text-align: center;
+    color: var(--color-letra);
+}
