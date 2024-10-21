@@ -33,6 +33,25 @@ api.get('/estado', (request,results)=>{
 
 });
 
+api.post('/register', (request,results)=>{
+    const {nick} = request.body; 
+    const {name} = request.body; 
+    const {surname} = request.body; 
+    const {email} = request.body; 
+    const {pass} = request.body; 
+    // const fecha = new Date();
+    // const hoy = fecha.getDate(); 
+    // const {created_at} = hoy; 
+    db.query('CALL set_register ( nick,name,surname,email,pass,created_at) VALUES (?)',[nick],[name],[surname],[email],[pass],[created_at],(err,resultados)=>{
+        if(err){
+            results.status(500).json({message : err.message });
+            return;
+        }
+        results.status(201).json({id:results.insertId , email });
+    });
+
+});
+
 const PORT = 3000;
 api.listen(PORT,()=>{
     console.log('Servidor escuchando el puerto 3000');
