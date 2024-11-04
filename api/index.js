@@ -18,6 +18,7 @@ db.connect((error)=>{
     }
     console.log('Conexion exitosa');
 })
+//------------------------GET-------------------------------------
 api.get('/',(request, results)=>{
     results.send("<h1>Api con express</h1>")
 })
@@ -32,22 +33,45 @@ api.get('/estado', (request,results)=>{
     });
 
 });
+//http://localhost:3000/user/pepe/argadrgd
+api.get('/user/:email/:pass', (request, results) => {
+    const { email, pass } = request.params;
 
-api.post('/register', (request,results)=>{
-    const {nick} = request.body; 
-    const {name} = request.body; 
-    const {surname} = request.body; 
-    const {email} = request.body; 
-    const {pass} = request.body; 
-    // const fecha = new Date();
-    // const hoy = fecha.getDate(); 
-    // const {created_at} = hoy; 
-    db.query('CALL set_register ( nick,name,surname,email,pass,created_at) VALUES (?)',[nick],[name],[surname],[email],[pass],[created_at],(err,resultados)=>{
+    db.query('CALL get_user(?, ?)', [email, pass], (err, resultados) => {
+        if (err) {
+            results.status(500).json({ message: err.message });
+            return;
+        }
+        if (resultados.length > 0 && resultados[0].length > 0) {
+            results.json(resultados[0]);
+        } else {
+            results.status(404).json({ message: 'Usuario no encontrado' });
+        }
+    });
+});
+//---------------------------POST----------------------------------------
+api.post('/register', (request, results) => {
+    const { nick, name, surname, email, pass } = request.body;
+  
+    db.query('CALL set_register(?, ?, ?, ?, ?)', [nick, name, surname, email, pass], (err, resultados) => {
+        if (err) {
+            results.status(500).json({ message: err.message });
+            return;
+        }
+        results.status(201).json({id:results.insertId , name});
+    });
+});
+
+
+
+api.post('/menu', (request,results)=>{
+    const {name,descripciones,imagenes} = request.body; 
+    db.query('CALL set_menu ( ?,?,?)',[name,descripciones,imagenes],(err,resultados)=>{
         if(err){
             results.status(500).json({message : err.message });
             return;
         }
-        results.status(201).json({id:results.insertId , email });
+        results.status(201).json({id:results.insertId , name});
     });
 
 });
