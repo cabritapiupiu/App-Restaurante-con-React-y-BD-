@@ -45,7 +45,7 @@
   gap: 1rem;
 }
 
-#landing header .navegador button {
+#landing header .navegador a {
   height: 80%;
   width: 17vh;
   background: var(--primary-bg-color);
@@ -55,15 +55,20 @@
   color: var(--text-color);
   font-size: 16px;
   font-weight: 750;
+  color: inherit; /* Hereda el color del contenedor del enlace */
+  text-decoration: none; /* Quita el subrayado */
 }
 
-#landing header .navegador button:hover {
+#landing header .navegador a:hover {
   cursor: pointer;
 }
 
-#landing header .navegador button:first-child {
+#landing header .navegador a:first-child {
   background-color: #ffffff;
   color: #1d181f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #landing #landing_main {
@@ -86,14 +91,14 @@
   color: red;
 }
 
-#landing #landing_main .box .button{
+#landing #landing_main .box .a{
   height: 5rem;
   display: flex;
   gap: 1rem;
   margin-top: 6rem;
 }
 
-#landing #landing_main .box .button button{
+#landing #landing_main .box .a a{
   height: 70%;
   width: 17vh;
   background: none;
@@ -106,12 +111,12 @@
 
 }
 
-#landing #landing_main .box .button button:first-of-type {
+#landing #landing_main .box .a a:first-of-type {
   background: var(--button-bg-color);
   color: var(--button-text-color);
 }
 
-#landing #landing_main .box .button button:hover{
+#landing #landing_main .box .a a:hover{
   cursor: pointer;
 }
 

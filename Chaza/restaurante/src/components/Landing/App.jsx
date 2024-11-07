@@ -1,5 +1,4 @@
 import './App.css';
-
 export default function App() {
   return (
     <>
@@ -12,8 +11,9 @@ export default function App() {
 
           {/* NAVEGADOR */}
           <nav className='navegador'>
-            <button>LOGIN</button>
-            <button>REGISTRO</button>
+            <a href="Logueo">LOGIN</a>
+            <a href="Registrarse">REGISTRO</a>
+
           </nav>
         </header>
 
@@ -21,7 +21,7 @@ export default function App() {
           <div className='box'>
             <h1>We Provide<br />Delivery Within</h1>
             <h2>30 Min</h2>
-            <div className="button">
+            <div className="a">
               <button>Order Now</button>
               <button>See Menu</button>
             </div>

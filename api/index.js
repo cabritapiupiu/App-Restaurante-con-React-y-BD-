@@ -34,8 +34,8 @@ api.get('/estado', (request,results)=>{
 
 });
 //http://localhost:3000/user/pepe/argadrgd
-api.get('/user/:email/:pass', (request, results) => {
-    const { email, pass } = request.params;
+api.post('/user', (request, results) => {
+    const { email, pass } = request.body;
 
     db.query('CALL get_user(?, ?)', [email, pass], (err, resultados) => {
         if (err) {
@@ -46,6 +46,7 @@ api.get('/user/:email/:pass', (request, results) => {
             results.json(resultados[0]);
         } else {
             results.status(404).json({ message: 'Usuario no encontrado' });
+            return; 
         }
     });
 });
