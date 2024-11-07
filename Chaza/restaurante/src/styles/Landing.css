@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    background-color: #1e181f;
+}
+
+/* HEADER */
+
+header {
+    height: 12vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem 2rem;
+    color: #ccc;
+}
+
+span {
+    display: block;
+    width: 100%;           
+    height: 1px;
+    background-color: #ccc;
+}
+
+header .contenedor-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 20%;
+}
+
+header .contenedor-logo .logo {
+    height: 100%;
+    width: 100%;
+    background: url('../assets/image/logo.png') center no-repeat;
+    background-size: contain;
+}
+
+header nav ul{
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+}
+
+header nav ul li{
+    margin: 0 .5rem;
+}
+
+header nav ul li a{
+    color: #ccc;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+header nav ul li a:hover{
+    background-color: #555;
+}
+
+header nav ul li:last-child a {
+    border-radius: 50%;
+}
+
+nav ul li.perfil a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav ul li.perfil img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+nav ul li.perfil a:hover {
+    background-color: transparent;
+}
+
+/* MAIN */
+
+main {
+    padding: 2rem;
+}
+
+.contenedor-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.descripcion {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 4rem 4rem 2rem;
+}
+
+.descripcion-texto {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.logos ul {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.logos ul li a {
+    background-color: #555;
+    padding: .5rem 2rem;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.image-restaurante {
+    position: relative;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 2rem;
+}
+
+.image-restaurante img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.indicadores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.indicadores li {
+    width: 10px;
+    height: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    margin: 0 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.indicadores li.active {
+    background-color: #007BFF;
+    transform: scale(1.2);
+}
+
+.indicadores li:hover {
+    background-color: #444;
+    cursor: pointer;
+}
+
+/* ARTICULO DE LOS PLATILLOS */
+
+article {
+    margin: 1rem 4rem;
+    padding: 2rem;
+    background: none;
+    border: 1px solid #ccc;
+    margin-top: 2rem;
+}
+
+article h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ccc;
+}
+
+/* Efecto de deslizamiento de los platos */
+/* Contenedor de los platos */
+.container-plato {
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;  /* Asegura que los elementos fuera del contenedor no se vean */
+    position: relative;
+    width: 100%;  /* Asegúrate de que el contenedor tenga el tamaño adecuado */
+    animation: slide 20s linear infinite;  /* Deslizar de manera continua */
+}
+
+.container-plato .plato {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #fff;
+    gap: 1rem;
+    min-width: 200px;  /* Puedes ajustar el tamaño de cada plato */
+}
+
+/* Puedes ajustar los tiempos de las animaciones si lo deseas */
+
+
+.imagen-plato {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    width: 100%;
+    height: 200px;
+}
+
+.imagen-plato img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease-in-out;
+}
+
+.imagen-plato::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #1e181f 100%);
+    pointer-events: none;
+}
+
+.plato .titulo {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-top: 1rem;
+}
+
+.plato h3 {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .container-plato {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .container-plato {
+        grid-template-columns: 1fr;
+    }
+}
