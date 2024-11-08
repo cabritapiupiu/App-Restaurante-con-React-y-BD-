@@ -10,7 +10,7 @@ export default function EmailForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Login enviado:', username, password);
-        // Aquí iría la lógica para el inicio de sesión, como una llamada a la APIs
+        // Aquí iría la lógica para el inicio de sesión, como una llamada a la API
     };
 
     return (

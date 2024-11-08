@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header>
       <div className="contenedor-logo">
-        <div className="logo"></div>
+        <a href="Landing" className="logo"></a>
       </div>
       <nav>
         <ul>
