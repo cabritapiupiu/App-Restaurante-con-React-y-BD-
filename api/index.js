@@ -33,6 +33,28 @@ api.get('/estado', (request,results)=>{
     });
 
 });
+
+http://localhost:3000/promociones
+api.get('/promociones', (req, res) => {
+    db.query('CALL get_promociones()', (err, resultados) => {
+        if (err) {
+            res.status(500).json({ message: err.message });
+            return;
+        }
+        res.json(resultados);
+    });
+});
+
+http://localhost:3000/fotos
+api.get('/fotos', (req, res) => {
+    db.query('CALL get_fotos_platillos()', (err, resultados) => {
+        if (err) {
+            res.status(500).json({ message: err.message });
+            return;
+        }
+        res.json(resultados);
+    });
+});
 //http://localhost:3000/user/pepe/argadrgd
 api.post('/user', (request, results) => {
     const { email, pass } = request.body;
@@ -51,6 +73,15 @@ api.post('/user', (request, results) => {
     });
 });
 //---------------------------POST----------------------------------------
+
+// http://localhost:3000/register
+// {
+//     "nick":"hola",
+//     "name":"hola",
+//     "surname":"hola",
+//     "email":"luca397600@gmail.com",
+//     "pass":"hola"
+//   }
 api.post('/register', (request, results) => {
     const { nick, name, surname, email, pass } = request.body;
   
