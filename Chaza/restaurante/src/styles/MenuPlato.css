@@ -1,0 +1,43 @@
+/* src/styles/MenuPlato.css */
+
+
+
+.container-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+    gap: 20px;  /* Espacio entre las celdas */
+    padding: 20px;  /* Espacio alrededor de todo el contenedor */
+}
+
+.plato {
+    background: none;
+    border: 2px solid #aaa;
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center; /* Centrar el contenido */
+    cursor: pointer;
+}
+
+.imagen-plato img {
+    max-width: 100%;
+    border-radius: 8px; /* Redondear las imágenes */
+    margin-bottom: 10px;
+}
+
+.titulo {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333;
+}
+
+h3 {
+    font-size: 1em;
+    color: #777;
+}
+
+@media (max-width: 768px) {
+    .container-menu {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+}
