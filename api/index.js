@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql =require('mysql2');
+const cors=require('cors');
 const api =express();
+api.use(cors());
 require('dotenv').config();
 api.use(express.json());
 const db = mysql.createConnection({
@@ -85,7 +87,7 @@ api.post('/user', (request, results) => {
 api.post('/register', (request, results) => {
     const { nick, name, surname, email, pass } = request.body;
   
-    db.query('CALL set_register(?, ?, ?, ?, ?)', [nick, name, surname, email, pass], (err, resultados) => {
+    db.query('CALL set_register(?,?,?,?,?)', [nick, name, surname, email, pass], (err, resultados) => {
         if (err) {
             results.status(500).json({ message: err.message });
             return;
@@ -95,6 +97,26 @@ api.post('/register', (request, results) => {
 });
 
 
+
+// http://localhost:3000/agregar_platos
+// {
+//     "nick":"hola",
+//     "name":"hola",
+//     "surname":"hola",
+//     "email":"luca397600@gmail.com",
+//     "pass":"hola"
+//   }
+api.post('/agregar_platos', (request, results) => {
+    const {tipo,name,descripciones,imagenes} = request.body;
+  
+    db.query('CALL set_agregar_platos(?,?,?,?)', [tipo,name,descripciones,imagenes], (err, resultados) => {
+        if (err) {
+            results.status(500).json({ message: err.message });
+            return;
+        }
+        results.status(201).json({id:results.insertId , name});
+    });
+});
 
 api.post('/menu', (request,results)=>{
     const {name,descripciones,imagenes} = request.body; 
