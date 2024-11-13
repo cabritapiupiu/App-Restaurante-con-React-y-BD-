@@ -1,10 +1,40 @@
-// src/Main.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTruckFast, faGaugeSimple, faMusic, faCartShopping, faMugHot } from '@fortawesome/free-solid-svg-icons';
 import '../styles/Landing.css';
 
-export default function Main(){
+export default function Main() {
+    const [imagenes, setImagenes] = useState([]);  // Estado para las imágenes
+    const [loading, setLoading] = useState(true);  // Estado de carga
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);  // Estado para la imagen actual
+
+    // useEffect para hacer la solicitud de imágenes a la API
+    useEffect(() => {
+        const fetchImagenes = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/fotos');  // La URL de tu API
+                const data = await response.json();
+                setImagenes(data[0]);  // Suponiendo que las imágenes están en el primer array
+                setLoading(false);  // Cambiar el estado a false cuando la carga termine
+            } catch (error) {
+                console.error("Error al obtener las fotos:", error);
+                setLoading(false);
+            }
+        };
+
+        fetchImagenes();
+    }, []);  // Solo se ejecuta una vez cuando el componente se monta
+
+    // Si estamos cargando, mostramos un mensaje
+    if (loading) {
+        return <div>Cargando imágenes...</div>;
+    }
+
+    // Función para manejar el cambio de imagen al hacer clic en los indicadores
+    const handleIndicatorClick = (index) => {
+        setCurrentImageIndex(index);
+    };
+
     return (
         <main>  
             <div className="contenedor-main">
@@ -23,14 +53,20 @@ export default function Main(){
                         </ul>
                     </div>
                 </div>
+
                 <div className="image-restaurante">
-                    <img src="https://via.placeholder.com/600x400" alt="Imagen Restaurante" />
+                    {/* Mostrar la imagen actual */}
+                    <img src={imagenes[currentImageIndex]?.imagenes} alt={`Imagen Restaurante ${currentImageIndex}`} />
+
+                    {/* Indicadores (círculos) */}
                     <ul className="indicadores">
-                        <li className="active"></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        {imagenes.map((imagen, index) => (
+                            <li
+                                key={index}
+                                className={index === currentImageIndex ? "active" : ""}
+                                onClick={() => handleIndicatorClick(index)}  // Cambiar imagen al hacer clic
+                            ></li>
+                        ))}
                     </ul>
                 </div>
             </div>

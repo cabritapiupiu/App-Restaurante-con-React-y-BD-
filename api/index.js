@@ -1,40 +1,52 @@
 const express = require('express');
-const mysql =require('mysql2');
-const api =express();
+const mysql = require('mysql2');
+const cors = require('cors');  // Importa el paquete cors
+const api = express();
+
 require('dotenv').config();
 api.use(express.json());
+
+// Configuración de CORS
+api.use(cors());  // Esto habilita CORS para todas las rutas
+
+// Si solo quieres habilitar CORS para un dominio específico, usa lo siguiente:
+/*
+api.use(cors({
+    origin: 'http://localhost:3001'  // Cambia esto por la URL de tu frontend en React
+}));
+*/
+
 const db = mysql.createConnection({
-    host:process.env.DB_HOST,
-    user:process.env.DB_USER,
-    password :process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
 
-
-db.connect((error)=>{
-    if(error){
-        console.error('Eror al conectar:',error);
+db.connect((error) => {
+    if (error) {
+        console.error('Error al conectar:', error);
         return;
     }
-    console.log('Conexion exitosa');
-})
-//------------------------GET-------------------------------------
-api.get('/',(request, results)=>{
-    results.send("<h1>Api con express</h1>")
-})
+    console.log('Conexión exitosa');
+});
 
-api.get('/estado', (request,results)=>{
-    db.query("SELECT * FROM restaurante__estado",(err,resultados)=>{
-        if(err){
-            results.status(500).json({message : err.message })
+//------------------------GET-------------------------------------
+api.get('/', (request, results) => {
+    results.send("<h1>API con Express</h1>");
+});
+
+api.get('/estado', (request, results) => {
+    db.query("SELECT * FROM restaurante__estado", (err, resultados) => {
+        if (err) {
+            results.status(500).json({ message: err.message });
             return;
         }
         results.json(resultados);
     });
-
 });
 
-http://localhost:3000/promociones
+//http://localhost:3000/promociones
 api.get('/promociones', (req, res) => {
     db.query('CALL get_promociones()', (err, resultados) => {
         if (err) {
@@ -45,7 +57,7 @@ api.get('/promociones', (req, res) => {
     });
 });
 
-http://localhost:3000/fotos
+//http://localhost:3000/fotos
 api.get('/fotos', (req, res) => {
     db.query('CALL get_fotos_platillos()', (err, resultados) => {
         if (err) {
@@ -55,6 +67,7 @@ api.get('/fotos', (req, res) => {
         res.json(resultados);
     });
 });
+
 //http://localhost:3000/user/pepe/argadrgd
 api.post('/user', (request, results) => {
     const { email, pass } = request.body;
@@ -72,6 +85,7 @@ api.post('/user', (request, results) => {
         }
     });
 });
+
 //---------------------------POST----------------------------------------
 
 // http://localhost:3000/register
@@ -90,25 +104,22 @@ api.post('/register', (request, results) => {
             results.status(500).json({ message: err.message });
             return;
         }
-        results.status(201).json({id:results.insertId , name});
+        results.status(201).json({ id: results.insertId, name });
     });
 });
 
-
-
-api.post('/menu', (request,results)=>{
-    const {name,descripciones,imagenes} = request.body; 
-    db.query('CALL set_menu ( ?,?,?)',[name,descripciones,imagenes],(err,resultados)=>{
-        if(err){
-            results.status(500).json({message : err.message });
+api.post('/menu', (request, results) => {
+    const { name, descripciones, imagenes } = request.body;
+    db.query('CALL set_menu ( ?,?,?)', [name, descripciones, imagenes], (err, resultados) => {
+        if (err) {
+            results.status(500).json({ message: err.message });
             return;
         }
-        results.status(201).json({id:results.insertId , name});
+        results.status(201).json({ id: results.insertId, name });
     });
-
 });
 
 const PORT = 3000;
-api.listen(PORT,()=>{
-    console.log('Servidor escuchando el puerto 3000');
+api.listen(PORT, () => {
+    console.log('Servidor escuchando en el puerto 3000');
 });
