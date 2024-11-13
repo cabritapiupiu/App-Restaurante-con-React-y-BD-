@@ -1,6 +1,8 @@
 import React from 'react';
-import Headers from '../components/Headers';   // Verifica que estos componentes estén bien importados
-import SearchBar from '../components/SearchBar';   // Verifica que estos componentes estén bien importados
+import Headers from '../components/Headers';
+import SearchBar from '../components/SearchBar';
+import MenuPlato from '../components/MenuPlato';
+import Filtros from '../components/Filtros';
 import '../styles/SearchBar.css';
 
 const Menu = () => {
@@ -8,7 +10,13 @@ const Menu = () => {
         <div className="App">
             <Headers />
             <span></span>
-            <SearchBar />
+            <div className="Menu-navegador">
+                <div className="search-bar-container">
+                    <SearchBar />
+                </div>
+                <Filtros className="filtros" />
+            </div>
+            <MenuPlato />
         </div>
     );
 }
