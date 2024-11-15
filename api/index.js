@@ -1,57 +1,72 @@
 const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');  // Importa el paquete cors
-const api = express();
-
+const mysql =require('mysql2');
+const api =express();
 require('dotenv').config();
 api.use(express.json());
-
-// Configuración de CORS
-api.use(cors());  // Esto habilita CORS para todas las rutas
-
-// Si solo quieres habilitar CORS para un dominio específico, usa lo siguiente:
-/*
-api.use(cors({
-    origin: 'http://localhost:3001'  // Cambia esto por la URL de tu frontend en React
-}));
-*/
-
 const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    host:process.env.DB_HOST,
+    user:process.env.DB_USER,
+    password :process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
 
-db.connect((error) => {
-    if (error) {
-        console.error('Error al conectar:', error);
+
+db.connect((error)=>{
+    if(error){
+        console.error('Eror al conectar:',error);
         return;
     }
-    console.log('Conexión exitosa');
-});
-
+    console.log('Conexion exitosa');
+})
 //------------------------GET-------------------------------------
 
+//http://localhost:3000/tipo
+api.post('/tipo', (request, results) => {
+    const {tipo} = request.body;
 
+    db.query('CALL get_tipo(?)', [tipo], (err, resultados) => {
+        if (err) {
+            results.status(500).json({ message: err.message });
+            return;
+        }
+        if (resultados.length > 0 && resultados[0].length > 0) {
+            results.json(resultados[0]);
+        } else {
+            results.status(404).json({ message: 'Usuario no encontrado' });
+            return; 
+        }
+    });
+});
+
+
+
+api.get('/',(request, results)=>{
+    results.send("<h1>Api con express</h1>")
+})
+
+api.get('/estado', (request,results)=>{
+    db.query("SELECT * FROM restaurante__estado",(err,resultados)=>{
+        if(err){
+            results.status(500).json({message : err.message })
+            return;
+        }
+        results.json(resultados);
+    });
+
+});
+
+http://localhost:3000/promociones
 api.get('/promociones', (req, res) => {
     db.query('CALL get_promociones()', (err, resultados) => {
         if (err) {
             res.status(500).json({ message: err.message });
             return;
         }
-
-        if (resultados[0].length === 0) {  // Si no hay resultados
-            res.status(404).json({ message: 'No se encontraron promociones' });
-            return;
-        }
-
-        res.json(resultados[0]);
+        res.json(resultados);
     });
 });
 
-
-//http://localhost:3000/fotos
+http://localhost:3000/fotos
 api.get('/fotos', (req, res) => {
     db.query('CALL get_fotos_platillos()', (err, resultados) => {
         if (err) {
@@ -61,7 +76,6 @@ api.get('/fotos', (req, res) => {
         res.json(resultados);
     });
 });
-
 //http://localhost:3000/user/pepe/argadrgd
 api.post('/user', (request, results) => {
     const { email, pass } = request.body;
@@ -79,7 +93,6 @@ api.post('/user', (request, results) => {
         }
     });
 });
-
 //---------------------------POST----------------------------------------
 
 // http://localhost:3000/register
@@ -98,44 +111,65 @@ api.post('/register', (request, results) => {
             results.status(500).json({ message: err.message });
             return;
         }
-        results.status(201).json({ id: results.insertId, name });
+        results.status(201).json({id:results.insertId , name});
     });
 });
 
-api.post('/menu', (request, results) => {
-    const { name, descripciones, imagenes } = request.body;
-    db.query('CALL set_menu ( ?,?,?)', [name, descripciones, imagenes], (err, resultados) => {
+
+// http://localhost:3000/agregar_platos
+api.post('/agregar_platos', (request, results) => {
+    const {tipo,name,descripciones,imagenes} = request.body;
+  
+    db.query('CALL set_agregar_platos(?,?,?,?)', [tipo,name,descripciones,imagenes], (err, resultados) => {
         if (err) {
             results.status(500).json({ message: err.message });
             return;
         }
-        results.status(201).json({ id: results.insertId, name });
+        results.status(201).json({id:results.insertId , name});
     });
 });
+p_ 
 
-
-api.get('/detalles/:id', (req, res) => {
-    const { id } = req.params;
-    db.query('SELECT * FROM restaurante__menu WHERE id_menu = ?', [id], (err, resultados) => {
+// http://localhost:3000/get_carrito
+api.post('/get_carrito', (request, results) => {
+    const {token_user} = request.body;
+  
+    db.query('CALL get_carrito(?)', [token_user], (err, resultados) => {
         if (err) {
-            console.error('Error en la consulta:', err);
-            res.status(500).json({ message: 'Error al obtener los detalles' });
+            results.status(500).json({ message: err.message });
             return;
         }
-
-        if (resultados.length === 0) {
-            res.status(404).json({ message: 'No se encontraron detalles para este plato' });
-            return;
-        }
-
-        res.json(resultados);
+        results.status(201).json({id:results.insertId , name});
     });
 });
 
 
+// http://localhost:3000/carrito
+api.post('/carrito', (request, results) => {
+    const {menu,user} = request.body;
+  
+    db.query('CALL set_carrito(?,?)', [menu,user], (err, resultados) => {
+        if (err) {
+            results.status(500).json({ message: err.message });
+            return;
+        }
+        results.status(201).json({id:results.insertId , name});
+    });
+});
+
+api.post('/menu', (request,results)=>{
+    const {name,descripciones,imagenes} = request.body; 
+    db.query('CALL set_menu ( ?,?,?)',[name,descripciones,imagenes],(err,resultados)=>{
+        if(err){
+            results.status(500).json({message : err.message });
+            return;
+        }
+        results.status(201).json({id:results.insertId , name});
+    });
+
+});
 
 const PORT = 3000;
-api.listen(PORT, () => {
-    console.log('Servidor escuchando en el puerto 3000');
+api.listen(PORT,()=>{
+    console.log('Servidor escuchando el puerto 3000');
 });
-
