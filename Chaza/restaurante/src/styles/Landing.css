@@ -144,9 +144,9 @@ main {
 }
 
 .image-restaurante img {
-    max-width: 100%;
-    height: auto;
     border-radius: 8px;
+    height: 400px;
+    width: 600px;
 }
 
 .indicadores {
