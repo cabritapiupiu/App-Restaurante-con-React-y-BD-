@@ -32,19 +32,7 @@ db.connect((error) => {
 });
 
 //------------------------GET-------------------------------------
-api.get('/', (request, results) => {
-    results.send("<h1>API con Express</h1>");
-});
 
-api.get('/estado', (request, results) => {
-    db.query("SELECT * FROM restaurante__estado", (err, resultados) => {
-        if (err) {
-            results.status(500).json({ message: err.message });
-            return;
-        }
-        results.json(resultados);
-    });
-});
 
 api.get('/promociones', (req, res) => {
     db.query('CALL get_promociones()', (err, resultados) => {
@@ -125,23 +113,6 @@ api.post('/menu', (request, results) => {
     });
 });
 
-// api.get('/menu')
-api.get('/platillos', (req, res) => {
-    db.query('SELECT * FROM restaurante__menu', (err, resultados) => {
-        if (err) {
-            console.error('Error en la consulta:', err);
-            res.status(500).json({ message: 'Error al obtener los platos' });
-            return;
-        }
-
-        if (resultados.length === 0) {
-            res.status(404).json({ message: 'No se encontraron platos' });
-            return;
-        }
-
-        res.json(resultados);
-    });
-});
 
 api.get('/detalles/:id', (req, res) => {
     const { id } = req.params;
