@@ -1,0 +1,24 @@
+/* Estilo de los filtros */
+.filtros {
+    display: flex;
+    justify-content: flex-start;  /* Alineación a la izquierda */
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Estilo de los botones de filtro */
+.filtros button {
+    background: #ccc;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 20px;
+    color: #555;
+}
+
+/* Estilo cuando el filtro está en hover */
+.filtros button:hover {
+    background-color: #555;
+    color: #ccc;
+}

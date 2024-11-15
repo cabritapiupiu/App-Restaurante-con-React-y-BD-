@@ -6,9 +6,10 @@ import '../styles/Landing.css';
 
 export default function Header() {
   return (
+    <>
     <header>
       <div className="contenedor-logo">
-        <div className="logo"></div>
+        <a href="/Landing" className="logo"></a>
       </div>
       <nav>
         <ul>
@@ -24,5 +25,7 @@ export default function Header() {
         </ul>
       </nav>
     </header>
+    <span></span>
+    </>
   );
 }

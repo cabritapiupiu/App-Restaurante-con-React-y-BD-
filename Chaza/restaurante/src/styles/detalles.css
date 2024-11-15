@@ -1,0 +1,152 @@
+.detalle-plato {
+    color: #ccc;
+}
+
+.container-img {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 2rem;
+}
+
+.prime {
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    object-fit: contain;
+}
+
+.after {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+    filter: blur(10px);
+    object-fit: cover;
+}
+
+.container-tittle {
+    padding: 0 4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-tittle h1 {
+    font-size: 52px;
+    margin: 0;
+}
+
+.container-tittle .precio {
+    background-color: #333;
+    position: absolute;
+    right: 20vh;
+    padding: 1rem 2rem;
+    border-radius: 1.5rem 0;
+    font-size: 32px;
+}
+
+.container-details {
+    padding: 2rem 4rem;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 0;
+    width: 97%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 1rem 2rem;
+}
+
+.buttons .cant {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30%;
+}
+
+.buttons .cant button,
+.user {
+    height: 100%;
+    width: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    background: #ccc;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 15px;
+    color: #333;
+}
+
+.buttons .compra {
+    height: 100%;
+    width: 70%;
+}
+
+.buttons .compra button {
+    height: 100%;
+    width: 100%;
+    font-size: 28px;
+    background: #ccc;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+/* Estilos para el pop-up */
+.popup {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+.popup-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.popup-content p {
+    margin-bottom: 20px;
+}
+
+.popup-content button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.popup-content button:hover {
+    background-color: #0056b3;
+}
