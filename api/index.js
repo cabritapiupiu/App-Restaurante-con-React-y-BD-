@@ -46,16 +46,22 @@ api.get('/estado', (request, results) => {
     });
 });
 
-//http://localhost:3000/promociones
 api.get('/promociones', (req, res) => {
     db.query('CALL get_promociones()', (err, resultados) => {
         if (err) {
             res.status(500).json({ message: err.message });
             return;
         }
-        res.json(resultados);
+
+        if (resultados[0].length === 0) {  // Si no hay resultados
+            res.status(404).json({ message: 'No se encontraron promociones' });
+            return;
+        }
+
+        res.json(resultados[0]);
     });
 });
+
 
 //http://localhost:3000/fotos
 api.get('/fotos', (req, res) => {
@@ -118,6 +124,44 @@ api.post('/menu', (request, results) => {
         results.status(201).json({ id: results.insertId, name });
     });
 });
+
+// api.get('/menu')
+api.get('/platillos', (req, res) => {
+    db.query('SELECT * FROM restaurante__menu', (err, resultados) => {
+        if (err) {
+            console.error('Error en la consulta:', err);
+            res.status(500).json({ message: 'Error al obtener los platos' });
+            return;
+        }
+
+        if (resultados.length === 0) {
+            res.status(404).json({ message: 'No se encontraron platos' });
+            return;
+        }
+
+        res.json(resultados);
+    });
+});
+
+api.get('/detalles/:id', (req, res) => {
+    const { id } = req.params;
+    db.query('SELECT * FROM restaurante__menu WHERE id_menu = ?', [id], (err, resultados) => {
+        if (err) {
+            console.error('Error en la consulta:', err);
+            res.status(500).json({ message: 'Error al obtener los detalles' });
+            return;
+        }
+
+        if (resultados.length === 0) {
+            res.status(404).json({ message: 'No se encontraron detalles para este plato' });
+            return;
+        }
+
+        res.json(resultados);
+    });
+});
+
+
 
 const PORT = 3000;
 api.listen(PORT, () => {

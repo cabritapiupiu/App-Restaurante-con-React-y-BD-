@@ -7,7 +7,6 @@ const Landing = () => {
   return (
     <div className="App">
       <Headers />
-      <span></span>
       <Mains />
       <Articles />
     </div>
