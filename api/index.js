@@ -63,7 +63,7 @@ api.post('/pedido/:token', (request,results)=>{
 
 const token = 'tu_token_aqui';
 
-console.log('Token decodificado:', decoded);
+console.log('Token  decodificado:', decoded);
     
     const {estado} = 1;
 
