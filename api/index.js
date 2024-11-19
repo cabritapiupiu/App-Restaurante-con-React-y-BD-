@@ -82,16 +82,16 @@ api.post('/user', (req, res) => {
 
         if (resultados.length > 0 && resultados[0].length > 0) {
             // Si las credenciales son correctas
-            const user = resultados[0][0];
-
-            // Devolvemos una respuesta exitosa con los datos del usuario (sin token)
+            const user = resultados[0][0]; // Primer usuario encontrado
             return res.json({
                 message: 'Login exitoso',
                 user: {
-                    id: user.id,
+                    id_user : user.id_user,
+                    token: user.token,
                     email: user.email,
                     name: user.name,
-                    surname: user.surname
+                    surname: user.surname,
+                    pass : user.pass
                 }
             });
         } else {
@@ -102,23 +102,8 @@ api.post('/user', (req, res) => {
 });
 
 
-
-
-
-
-
-
 //---------------------------POST----------------------------------------
 
-// http://localhost:3000/register
-// {
-//     "nick":"hola",
-//     "name":"hola",
-//     "surname":"hola",
-//     "email":"luca397600@gmail.com",
-//     "pass":"hola"
-//   }
-// Endpoint para registrar usuario
 api.post('/register', (request, results) => {
     const { nick, name, surname, email, pass } = request.body;
 
@@ -162,6 +147,54 @@ api.get('/platillos', (req, res) => {
         res.json(resultados);
     });
 });
+
+api.post('/carrito', (req, res) => {
+    const { p_menu, p_user, cantidad } = req.body;
+
+    if (!p_menu || !p_user || !cantidad) {
+        return res.status(400).json({ message: 'Faltan datos en la solicitud' });
+    }
+
+    // Verifica los parámetros que se pasan al procedimiento almacenado
+    console.log('Parámetros que se pasarán a la consulta:', p_menu, p_user, cantidad); // Esto imprimirá los valores individuales
+
+    // Llamada al procedimiento con 3 parámetros
+    db.query('CALL set_carritos(?, ?, ?)', [p_menu, p_user, cantidad], (err, result) => {
+        if (err) {
+            console.error('Error al ejecutar la consulta:', err);  // Imprimir el error de la consulta
+            return res.status(500).json({ message: 'Error al agregar al carrito' });
+        }
+        res.status(200).json({ message: 'Producto agregado al carrito' });
+    });
+});
+
+
+// Obtener todos los productos del carrito de un usuario (Backend)
+api.get('/carrito', (req, res) => {
+    const { userId } = req.query; // Obtener el userId desde los parámetros de la consulta
+
+    if (!userId) {
+        return res.status(400).json({ message: 'Falta el userId en los parámetros de la consulta' });
+    }
+
+    // Consulta SQL para obtener todos los productos del carrito de un usuario
+    db.query(`CALL get_carrito(?)`, [userId], (err, resultados) => {
+        
+        if (err) {
+            console.error('Error en la consulta:', err);
+            return res.status(500).json({ message: 'Error al obtener los productos del carrito' });
+        }
+
+        if (resultados.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron productos en el carrito' });
+        }
+
+        res.json(resultados);
+    });
+});
+
+
+
 
 api.get('/detalles/:id', (req, res) => {
     const { id } = req.params;

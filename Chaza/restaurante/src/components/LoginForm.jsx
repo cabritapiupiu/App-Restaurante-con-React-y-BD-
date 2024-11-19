@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom'; // Importamos useNavigate para redirigir
 
 export default function LoginForm() {
   // Estado de la aplicación
@@ -19,41 +20,41 @@ export default function LoginForm() {
     setLogin((prevState) => ({ ...prevState, password: target.value }));
   };
 
-const loginFetch = async (e) => {
+  const navigate = useNavigate(); // Usamos useNavigate para la redirección
+
+  const loginFetch = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");  // Limpiar el error previo
 
     try {
-        const response = await fetch('http://localhost:3000/user', {
-          method: 'POST',
-          body: JSON.stringify({ email, pass: password }),
-          headers: { 'Content-Type': 'application/json' },
+      const response = await fetch('http://localhost:3000/user', {
+        method: 'POST',
+        body: JSON.stringify({ email, pass: password }),
+        headers: { 'Content-Type': 'application/json' },
       });
-    
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (response.ok) {
-            // Si el login fue exitoso, mostramos los datos del usuario
-            console.log('Login exitoso', data.user);
+      if (response.ok) {
+        // Si el login fue exitoso, mostramos los datos del usuario
+        console.log('Login exitoso', data.user);
 
-            // Aquí puedes hacer lo que quieras con los datos del usuario, como redirigir
-            window.location.pathname = "/landing"; // Redirigir a una página de perfil, por ejemplo
-        } else {
-            // Si hay un error (usuario o contraseña incorrectos), mostramos el mensaje
-            setError(data.message);
-        }
+        // Guardar los datos del usuario en localStorage
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        // Redirigir al perfil o a la página que estaban intentando acceder
+        navigate("/Perfil");  // Redirige a /Perfil después de loguearse
+      } else {
+        // Si hay un error (usuario o contraseña incorrectos), mostramos el mensaje
+        setError(data.message);
+      }
     } catch (err) {
-        setError(err.message);
+      setError(err.message);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
-
-
-
-
+  };
 
   return (
     loading ? <>"Cargando..."</> :

@@ -14,7 +14,13 @@ export default function Main() {
             try {
                 const response = await fetch('http://localhost:3000/fotos');  // La URL de tu API
                 const data = await response.json();
-                setImagenes(data[0]);  // Suponiendo que las imágenes están en el primer array
+
+                if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0])) {
+                    setImagenes(data[0]);  // Suponiendo que las imágenes están en el primer array
+                } else {
+                    console.error("Formato de datos inesperado:", data);
+                    setImagenes([]);  // Si no se reciben las imágenes correctamente
+                }
                 setLoading(false);  // Cambiar el estado a false cuando la carga termine
             } catch (error) {
                 console.error("Error al obtener las fotos:", error);
@@ -32,7 +38,9 @@ export default function Main() {
 
     // Función para manejar el cambio de imagen al hacer clic en los indicadores
     const handleIndicatorClick = (index) => {
-        setCurrentImageIndex(index);
+        if (index >= 0 && index < imagenes.length) {
+            setCurrentImageIndex(index);
+        }
     };
 
     return (
@@ -56,7 +64,11 @@ export default function Main() {
 
                 <div className="image-restaurante">
                     {/* Mostrar la imagen actual */}
-                    <img src={imagenes[currentImageIndex]?.imagenes} alt={`Imagen Restaurante ${currentImageIndex}`} />
+                    <img 
+                        src={imagenes[currentImageIndex]?.imagenes} 
+                        alt={`Imagen Restaurante ${currentImageIndex}`} 
+                        className="restaurant-image" 
+                    />
 
                     {/* Indicadores (círculos) */}
                     <ul className="indicadores">

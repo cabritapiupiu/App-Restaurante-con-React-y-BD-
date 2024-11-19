@@ -1,0 +1,55 @@
+/* carrito.css */
+.carrito-container {
+    background-color: #282828;
+    color: #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.carrito-container h1 {
+    color: #007bff;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.carrito-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.carrito-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carrito-item:hover {
+    background-color: #444;
+}
+
+.carrito-item-imagen {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.carrito-item-info h3 {
+    color: #ff5733;
+    margin: 0;
+}
+
+.carrito-item-info p {
+    margin: 5px 0;
+}

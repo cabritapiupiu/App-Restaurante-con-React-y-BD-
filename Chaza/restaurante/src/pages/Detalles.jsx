@@ -15,6 +15,9 @@ export default function Detalles() {
 
     const navigate = useNavigate();
 
+    // Obtén el usuario logueado desde localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+
     useEffect(() => {
         const fetchPlato = async () => {
             try {
@@ -54,9 +57,41 @@ export default function Detalles() {
         return <div>No se encontraron detalles para este plato.</div>;
     }
 
-    const handleAgregarAlCarrito = () => {
-        setPopupVisible(true);
+    // Llamada para agregar al carrito
+    const handleAgregarAlCarrito = async () => {
+        if (!user) {
+            alert("Por favor, inicie sesión para agregar al carrito.");
+            return;
+        }
+    
+        const carritoData = {
+            p_menu: plato.id_menu,   // ID del plato
+            p_user: user.id_user,    // ID del usuario
+            cantidad: cantidad       // Agregar la cantidad al carrito
+        };
+    
+        try {
+            const response = await fetch('http://localhost:3000/carrito', {
+                method: 'POST',
+                body: JSON.stringify(carritoData), // Los datos que se envían
+                headers: { 'Content-Type': 'application/json' }, // Asegura que el servidor espera JSON
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                setPopupVisible(true);  // Mostrar popup de confirmación
+            } else {
+                console.error('Error en el backend:', data);  // Ver el detalle del error
+                setError(data.message || 'Error al agregar al carrito');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud al backend:', error);
+            setError('Hubo un problema al agregar al carrito.');
+        }
     };
+    
+
 
     const handleRedirigirLanding = () => {
         navigate('/');
