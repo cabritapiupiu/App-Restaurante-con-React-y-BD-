@@ -1,20 +1,16 @@
 const express = require('express');
 const mysql = require('mysql2');
-const cors = require('cors');  // Importa el paquete cors
+const cors = require('cors');
 const api = express();
 
 require('dotenv').config();
 api.use(express.json());
 
-// Configuración de CORS
-api.use(cors());  // Esto habilita CORS para todas las rutas
-
-// Si solo quieres habilitar CORS para un dominio específico, usa lo siguiente:
-/*
 api.use(cors({
-    origin: 'http://localhost:3001'  // Cambia esto por la URL de tu frontend en React
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
 }));
-*/
 
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -74,23 +70,43 @@ api.get('/fotos', (req, res) => {
     });
 });
 
-//http://localhost:3000/user/pepe/argadrgd
-api.post('/user', (request, results) => {
-    const { email, pass } = request.body;
+api.post('/user', (req, res) => {
+    const { email, pass } = req.body;
 
+    // Consulta a la base de datos para verificar las credenciales
     db.query('CALL get_user(?, ?)', [email, pass], (err, resultados) => {
         if (err) {
-            results.status(500).json({ message: err.message });
-            return;
+            console.error('Error en la consulta:', err);
+            return res.status(500).json({ message: 'Error en la consulta de la base de datos' });
         }
+
         if (resultados.length > 0 && resultados[0].length > 0) {
-            results.json(resultados[0]);
+            // Si las credenciales son correctas
+            const user = resultados[0][0];
+
+            // Devolvemos una respuesta exitosa con los datos del usuario (sin token)
+            return res.json({
+                message: 'Login exitoso',
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                    surname: user.surname
+                }
+            });
         } else {
-            results.status(404).json({ message: 'Usuario no encontrado' });
-            return; 
+            // Si las credenciales son incorrectas
+            return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
         }
     });
 });
+
+
+
+
+
+
+
 
 //---------------------------POST----------------------------------------
 
@@ -102,17 +118,21 @@ api.post('/user', (request, results) => {
 //     "email":"luca397600@gmail.com",
 //     "pass":"hola"
 //   }
+// Endpoint para registrar usuario
 api.post('/register', (request, results) => {
     const { nick, name, surname, email, pass } = request.body;
-  
+
     db.query('CALL set_register(?, ?, ?, ?, ?)', [nick, name, surname, email, pass], (err, resultados) => {
         if (err) {
+            console.error('Error al registrar:', err);
             results.status(500).json({ message: err.message });
             return;
         }
-        results.status(201).json({ id: results.insertId, name });
+
+        results.status(201).json({ id: resultados.insertId, email });
     });
 });
+
 
 api.post('/menu', (request, results) => {
     const { name, descripciones, imagenes } = request.body;
