@@ -252,7 +252,6 @@ api.post('/agregar_platos', (request, results) => {
         results.status(201).json({id:results.insertId , name});
     });
 });
-p_ 
 
 // http://localhost:3000/get_carrito
 api.post('/get_carrito', (request, results) => {
