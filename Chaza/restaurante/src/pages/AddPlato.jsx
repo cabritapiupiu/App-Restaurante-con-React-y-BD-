@@ -75,6 +75,7 @@ const AddPlato = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <input
+              className='Add_input'
               type="text"
               id="name"
               value={name}
@@ -86,6 +87,7 @@ const AddPlato = () => {
           
           <div>
             <input
+              className='Add_input'
               type="text"
               id="imagen"
               value={imagen}
@@ -108,6 +110,7 @@ const AddPlato = () => {
 
           <div>
             <input
+              className='Add_input'
               type="number"
               id="precio"
               value={precio}
@@ -134,7 +137,7 @@ const AddPlato = () => {
           </div>
 
           {error && <div className="error-message">{error}</div>}
-          <button type="submit" disabled={loading}>
+          <button className='Add_button' type="submit" disabled={loading}>
             {loading ? "Cargando..." : "Agregar Platillo"}
           </button>
         </form>
