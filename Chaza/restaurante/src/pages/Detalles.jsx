@@ -117,7 +117,7 @@ export default function Detalles() {
                 </div>
                 <div className="container-tittle">
                     <h1>{plato.name}</h1>
-                    <p className='precio'>{plato.precio}$</p>
+                    <p className='precio'>{plato.precio}</p>
                 </div>
                 <div className="container-details">
                     <p>Disfruta del crujido perfecto con este delicioso platillo, que ha sido cuidadosamente frito hasta alcanzar una textura dorada y uniforme que te invita a probarlo. Cada pieza tiene una capa exterior crocante que, al morderla, revela un interior tierno y jugoso, creando una experiencia contrastante que es irresistible al paladar. La combinación de lo crujiente por fuera y lo suave por dentro hace que cada bocado sea una explosión de sabor y textura, una verdadera delicia en cada instante.</p>

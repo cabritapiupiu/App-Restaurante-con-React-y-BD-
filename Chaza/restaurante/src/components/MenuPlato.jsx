@@ -1,4 +1,3 @@
-// src/MenuPlato.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Plato from './Plato';
@@ -9,6 +8,9 @@ export default function MenuPlato() {
     const [platos, setPlatos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // Obtener el usuario desde localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
         const fetchPlatos = async () => {
@@ -30,6 +32,7 @@ export default function MenuPlato() {
 
         fetchPlatos();
     }, []);
+
     if (loading) {
         return <div>Cargando platos...</div>;
     }
@@ -42,12 +45,18 @@ export default function MenuPlato() {
         return <div>No hay platos disponibles.</div>;
     }
 
+    // Función para manejar el clic en un plato y navegar a su detalle
     const handlePlatoClick = (id) => {
         navigate(`/Detalles/${id}`);
     };
 
     return (
         <div className="menu-plato">
+            {user && user.role === 'Administrador' && (
+                <a className='add_plato' href='AddPlato'>+</a>
+            )}
+
+            {/* Mostrar los platos */}
             {platos.map((plato) => (
                 <Plato
                     key={plato.id_menu}

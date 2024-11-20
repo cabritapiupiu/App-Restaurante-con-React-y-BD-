@@ -83,6 +83,13 @@ api.post('/user', (req, res) => {
         if (resultados.length > 0 && resultados[0].length > 0) {
             // Si las credenciales son correctas
             const user = resultados[0][0]; // Primer usuario encontrado
+
+            if (user.email === 'admin@gmail.com' && user.pass === 'gatito69'){
+                user.role = 'Administrador';  // Asignar rol Admin
+            }else{
+                user.role = 'Usuario';
+            }
+
             return res.json({
                 message: 'Login exitoso',
                 user: {
@@ -91,7 +98,8 @@ api.post('/user', (req, res) => {
                     email: user.email,
                     name: user.name,
                     surname: user.surname,
-                    pass : user.pass
+                    pass : user.pass,
+                    role: user.role
                 }
             });
         } else {
@@ -121,15 +129,27 @@ api.post('/register', (request, results) => {
 
 
 api.post('/menu', (request, results) => {
-    const { name, descripciones, imagenes } = request.body;
-    db.query('CALL set_menu ( ?,?,?)', [name, descripciones, imagenes], (err, resultados) => {
+    const { categoria, name, descripcion, precio, imagen } = request.body;
+
+    // Verificar si el nombre está presente
+    if (!name || name.trim() === '') {
+        return results.status(400).json({ message: 'El nombre del platillo es requerido' });
+    }
+
+    // Verificar que todos los demás campos sean válidos
+    if (!categoria || !descripcion || !precio) {
+        return results.status(400).json({ message: 'Todos los campos son requeridos' });
+    }
+
+    db.query('CALL set_menu(?, ?, ?, ?, ?)', [categoria, name, descripcion, precio, imagen], (err, resultados) => {
         if (err) {
-            results.status(500).json({ message: err.message });
-            return;
+            return results.status(500).json({ message: err.message });
         }
-        results.status(201).json({ id: results.insertId, name });
+
+        results.status(201).json({ id: resultados.insertId, name });
     });
 });
+
 
 // api.get('/menu')
 api.get('/platillos', (req, res) => {
@@ -232,7 +252,6 @@ api.post('/agregar_platos', (request, results) => {
         results.status(201).json({id:results.insertId , name});
     });
 });
-p_ 
 
 // http://localhost:3000/get_carrito
 api.post('/get_carrito', (request, results) => {
