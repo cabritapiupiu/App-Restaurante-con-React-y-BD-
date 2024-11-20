@@ -43,7 +43,7 @@ api.get('/estado', (request, results) => {
     });
 
 api.get('/promociones', (req, res) => {
-    db.query('CALL get_promociones()', (err, resultados) => {
+    db.query('CALL get_promocion()', (err, resultados) => {
         if (err) {
             res.status(500).json({ message: err.message });
             return;
@@ -131,6 +131,8 @@ api.post('/register', (request, results) => {
 api.post('/menu', (request, results) => {
     const { categoria, name, descripcion, precio, imagen } = request.body;
 
+    console.log(request.body);
+    
     // Verificar si el nombre está presente
     if (!name || name.trim() === '') {
         return results.status(400).json({ message: 'El nombre del platillo es requerido' });
@@ -141,7 +143,27 @@ api.post('/menu', (request, results) => {
         return results.status(400).json({ message: 'Todos los campos son requeridos' });
     }
 
-    db.query('CALL set_menu(?, ?, ?, ?, ?)', [categoria, name, descripcion, precio, imagen], (err, resultados) => {
+    // Asegurarse de que la categoría esté mapeada a un valor numérico (en el caso de que sea un string)
+    let categoriaId;
+    switch (categoria) {
+        case 'entrada':
+            categoriaId = 1;
+            break;
+        case 'plato_principal':
+            categoriaId = 2;
+            break;
+        case 'postre':
+            categoriaId = 3;
+            break;
+        case 'bebida':
+            categoriaId = 4;
+            break;
+        default:
+            return results.status(400).json({ message: 'Categoría no válida' });
+    }
+
+    // Llamada al procedimiento almacenado con los parámetros en el orden correcto
+    db.query('CALL set_menu(?, ?, ?, ?, ?)', [name, descripcion, imagen, categoriaId, precio], (err, resultados) => {
         if (err) {
             return results.status(500).json({ message: err.message });
         }
@@ -151,9 +173,21 @@ api.post('/menu', (request, results) => {
 });
 
 
-// api.get('/menu')
+
 api.get('/platillos', (req, res) => {
-    db.query('SELECT * FROM restaurante__menu', (err, resultados) => {
+    const { search, category } = req.query;  // Obtener los parámetros de búsqueda y categoría
+
+    let query = 'SELECT * FROM restaurante__menu WHERE 1';  // Base de la consulta
+
+    if (search) {
+        query += ` AND name LIKE '%${search}%'`;  // Filtrar por nombre del platillo
+    }
+
+    if (category) {
+        query += ` AND FK_tipo = '${category}' `;  // Filtrar por categoría
+    }
+
+    db.query(query, (err, resultados) => {
         if (err) {
             console.error('Error en la consulta:', err);
             res.status(500).json({ message: 'Error al obtener los platos' });
@@ -168,6 +202,8 @@ api.get('/platillos', (req, res) => {
         res.json(resultados);
     });
 });
+
+
 
 api.post('/carrito', (req, res) => {
     const { p_menu, p_user, cantidad } = req.body;

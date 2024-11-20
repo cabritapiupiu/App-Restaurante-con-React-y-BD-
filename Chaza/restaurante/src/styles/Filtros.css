@@ -1,7 +1,7 @@
 /* Estilo de los filtros */
 .filtros {
     display: flex;
-    justify-content: flex-start;  /* Alineación a la izquierda */
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
 }
@@ -15,6 +15,7 @@
     padding: 1rem;
     border-radius: 20px;
     color: #555;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Añadir transición para mejor efecto visual */
 }
 
 /* Estilo cuando el filtro está en hover */
