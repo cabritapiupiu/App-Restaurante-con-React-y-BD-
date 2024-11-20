@@ -1,14 +1,14 @@
 /* src/styles/MenuPlato.css */
 
-
-
-.container-menu {
+/* Contenedor principal de los platos */
+.menu-plato {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
-    gap: 20px;  /* Espacio entre las celdas */
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales, cada una ocupa el 50% */
+    gap: 20px;  /* Espacio entre los platos */
     padding: 20px;  /* Espacio alrededor de todo el contenedor */
 }
 
+/* Estilo de cada plato */
 .plato {
     background: none;
     border: 2px solid #aaa;
@@ -17,27 +17,51 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     text-align: center; /* Centrar el contenido */
     cursor: pointer;
+    min-height: 250px; /* Altura mínima para todos los platos */
+    display: flex;
+    flex-direction: column; /* Permitir que el contenido se alinee verticalmente */
+    justify-content: space-between; /* Asegurar que el contenido se distribuye */
 }
 
+/* Imagen del plato */
 .imagen-plato img {
     max-width: 100%;
     border-radius: 8px; /* Redondear las imágenes */
     margin-bottom: 10px;
 }
 
+.add_plato{
+    background: none;
+    outline: none;
+    border: 2px solid #aaa;
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 78px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* Título del plato */
 .titulo {
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
 }
 
+/* Estilo para el precio de cada plato */
 h3 {
     font-size: 1em;
     color: #777;
 }
 
+/* Estilos para pantallas más pequeñas */
 @media (max-width: 768px) {
-    .container-menu {
+    .menu-plato {
         grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
     }
 }

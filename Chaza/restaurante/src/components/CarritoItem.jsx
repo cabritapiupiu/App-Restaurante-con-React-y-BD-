@@ -8,7 +8,7 @@ const convertirPrecio = (precioString) => {
 };
 
 export default function CarritoItem({ nombre, imagen, precio, cantidad, onClick }) {
-    const precioNumerico = convertirPrecio(precio);
+    const precioNumerico = precio;
     const total = precioNumerico * cantidad;
 
     return (

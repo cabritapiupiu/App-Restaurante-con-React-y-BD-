@@ -21,15 +21,7 @@ export default function Plato({
 
             <h3 className="titulo">{nombre}</h3>
 
-            {showTiempo && token && (
-                <h3>TIEMPO DE TARDANZA: {token}</h3>
-            )}
-
-            <h3>{precio}</h3>
-
-            {showDescripcion && (
-                <p></p>
-            )}
+            <h3>${precio}</h3>
         </button>
     );
 }

@@ -1,0 +1,126 @@
+  
+  .container__Add_plato{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 40px;
+    font-weight: 600;
+  }
+  
+  /* Contenedor principal del formulario */
+  .addPlato {
+    background-color: #1f1f1f;
+    padding: 40px 60px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 600px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Efecto de elevación al pasar el mouse sobre el formulario */
+  .addPlato:hover {
+    transform: translateY(-10px);
+  }
+  
+  /* Formulario */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  /* Estilos de las etiquetas */
+  label {
+    font-size: 16px;
+    color: #bbb;
+    margin-bottom: 8px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+  
+  /* Estilo de los campos de entrada */
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    padding: 14px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #eee;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Estilos cuando el campo tiene el foco */
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #4CAF50; /* Verde para el foco */
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.7); /* Sombra verde */
+  }
+  
+  /* Estilo para el área de texto */
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  /* Botón de envío */
+  button {
+    background-color: #4CAF50; /* Verde brillante */
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 30px;
+  }
+  
+  button:hover {
+    background-color: #45a049; /* Oscuro al pasar el ratón */
+    transform: translateY(-3px); /* Efecto de "elevación" */
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  /* Estilo para select */
+  select {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #eee;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el contenedor de los campos */
+  div > div {
+    margin-bottom: 20px;
+  }
+  
+  /* Transiciones suaves para los campos */
+  input[type="text"], input[type="number"], select, textarea {
+    transition: all 0.3s ease;
+  }
+  
+  

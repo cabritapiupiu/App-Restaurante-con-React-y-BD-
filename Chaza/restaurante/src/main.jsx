@@ -11,6 +11,8 @@ import Detalles from './pages/Detalles.jsx';
 import Menu from './pages/Menu.jsx';
 import Perfil from './pages/Perfil.jsx';
 import Carrito from './pages/Carrito.jsx';
+import AddPlato from './pages/AddPlato.jsx';
+
 
 import ProtectedRoute from './components/ProtectedRoute';  // Importamos ProtectedRoute
 
@@ -50,6 +52,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/AddPlato"
+          element={
+            <ProtectedRoute restricted={false}>
+              <AddPlato />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/Login" element={<Login />} />
 
         <Route path="/Detalles/:id" element={<Detalles />} />
